@@ -2,8 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import GeneralLayout from "../../layouts/GeneralLayout";
 import data from "../../utils/data";
-import SongItem from "../../components/SongItem/SongItem";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import {
+  ChevronRightIcon,
+} from "@heroicons/react/solid";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "@chakra-ui/react";
+import MusicPotion from "../../components/music_components/MusicPotion";
 
 function Category() {
   const router = useRouter();
@@ -23,23 +30,30 @@ function Category() {
       title={current_category?.name}
       description={current_category?.description}
     >
-      <div className="flex flex-col py-16">
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
-            <p className="text-gray-700 text-lg ">Latest Music</p>
-            <div className="icons flex flex-row items-center gap-2">
-              <span className="bg-white shadow p-1 rounded">
-              <ChevronLeftIcon height={20} width={20} />
-              </span>
-              <span className="bg-white shadow p-1 rounded">
-              <ChevronRightIcon height={20} width={20} />
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-6">
-            <SongItem />
-          </div>
+      <div className="flex flex-col">
+        <div className="flex flex-col items-center w-full py-8">
+          <Breadcrumb
+            spacing="8px"
+            separator={
+              <ChevronRightIcon color="gray.500" height={14} width={14} />
+            }
+          >
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#">Category</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="#">{current_category?.name}</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
         </div>
+        <>
+            <MusicPotion heading={current_category?.name} music={[1,2,3,4,5,6,7,7,7,75,65,65,6,5,65,6,5,65,6,5,65,6,5,65,6,5]} />
+        </>
       </div>
     </GeneralLayout>
   );
