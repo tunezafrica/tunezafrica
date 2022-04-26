@@ -4,11 +4,12 @@ import { SearchIcon } from "@heroicons/react/solid";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import data from "../../utils/data";
 import { useRouter } from "next/router";
-import logo from '../../public/icon.png'
+import logo from "../../public/icon.png";
 import Image from "next/image";
+import Link from "next/link";
 
 function Navbar() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -17,37 +18,49 @@ function Navbar() {
             <div className="relative flex items-center justify-between h-16">
               <div className="flex items-center px-2 lg:px-0">
                 <div className="flex-shrink-0">
-                  <Image
-                    className="block lg:hidden h-8 w-auto"
-                    src={logo}
-                    height={25}
-                    width={25}
-                    objectFit="cover"
-                    alt="Workflow"
-                  />
-                  <div className="hidden lg:flex flex-row items-center">
-                  <Image
-                    className="hidden lg:block h-8 w-auto"
-                    height={25}
-                    width={25}
-                    objectFit="cover"
-                    src={logo}
-                    alt="Workflow"
-                  />
-                  <p className="text-gray-900 font-bold ml-1">TunezAfrica</p>
+                  <div className="lg:hidden block">
+                    <Image
+                      className="block lg:hidden h-8 w-auto"
+                      src={logo}
+                      height={25}
+                      width={25}
+                      objectFit="cover"
+                      alt="Workflow"
+                    />
+                  </div>
+                  <div
+                    onClick={() => router.push("/")}
+                    className="hidden lg:flex flex-row items-center cursor-pointer"
+                  >
+                    <Image
+                      className="hidden lg:block h-8 w-auto"
+                      height={25}
+                      width={25}
+                      objectFit="cover"
+                      src={logo}
+                      alt="Workflow"
+                    />
+                    <p className="text-gray-900 font-bold ml-1">TunezAfrica</p>
                   </div>
                 </div>
                 <div className="hidden lg:block lg:ml-6">
                   <div className="flex space-x-4">
                     {data.categories.map((category, index) => (
-                      <div
-                        onClick={()=> router.push(category.location)}
+                      <Link
                         key={index + category.name}
                         href={category.location}
-                        className={`${router.asPath === category.location ? "bg-gray-200" : ""} hover:bg-gray-200 text-gray-900 px-3 py-2 cursor-pointer rounded-md text-sm font-medium`}
+                        passHref
                       >
-                        {category.name}
-                      </div>
+                        <a
+                          className={`${
+                            router.asPath === category.location
+                              ? "bg-gray-200"
+                              : ""
+                          } hover:bg-gray-200 text-gray-900 px-3 py-2 cursor-pointer rounded-md text-sm font-medium`}
+                        >
+                          {category.name}
+                        </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -91,21 +104,17 @@ function Navbar() {
           <Disclosure.Panel className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-             {
-               data.categories.map((category, index)=>(
+              {data.categories.map((category, index) => (
                 <Disclosure.Button
-                key={index}
-                as="a"
-                href={category.location}
-                className="hover:bg-gray-200 text-gray-700 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                {category.name}
-              </Disclosure.Button>
-               ))
-             }
-             
+                  key={index}
+                  as="a"
+                  href={category.location}
+                  className={`${router.asPath === category.location ? "bg-gray-200" : "" } hover:bg-gray-200 w-full text-gray-700 block px-3 py-2 rounded-md text-sm font-semibold`}
+                >
+                  {category.name}
+                </Disclosure.Button>
+              ))}
             </div>
-           
           </Disclosure.Panel>
         </>
       )}
