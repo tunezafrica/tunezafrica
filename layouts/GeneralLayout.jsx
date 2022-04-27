@@ -61,7 +61,7 @@ function GeneralLayout({
         <meta name="twitter:image" content={og_image} />
         <link rel="canonical" href={canonical_url ? canonical_url : url} />
       </Head>
-      <nav className="">
+      <nav className="sticky top-0 z-50 right-0">
         <Navbar />
       </nav>
       <main className="w-full pt-16 bg-gray-100 min-h-screen" style={{ backgroundColor: 'rgb(243 244 246)' }}>

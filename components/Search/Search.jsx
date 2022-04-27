@@ -18,10 +18,10 @@ function Search() {
     <>
       <div
         onClick={onOpen}
-        className="flex md:p-3 p-2 hover:bg-gray-200 cursor-pointer rounded-full bg-gray-200"
+        className="flex md:p-3 p-2 hover:bg-gray-200 cursor-pointer md:rounded-full rounded bg-gray-200"
       >
-        <SearchIcon height={20} width={20} className="text-gray-700" />
-        <p className="ml-2 text-gray-700 md:hidden flex">Search songs</p>
+        <SearchIcon height={20} width={20} className="md:text-gray-700 text-gray-500" />
+        <p className="ml-4 text-gray-500 md:hidden flex">Search for music...</p>
       </div>
 
       <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>

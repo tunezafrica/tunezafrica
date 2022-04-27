@@ -19,7 +19,7 @@ function Navbar() {
             <div className="relative flex items-center justify-between h-16">
               <div className="flex items-center px-2 lg:px-0">
                 <div className="flex-shrink-0">
-                  <div className="lg:hidden block">
+                  <div onClick={() => router.push("/")} className="lg:hidden block">
                     <Image
                       className="block lg:hidden h-8 w-auto"
                       src={logo}
