@@ -4,8 +4,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import GeneralLayout from "../../layouts/GeneralLayout";
 import picture from "../../public/cover.jpg";
-import Script from "next/script";
-import axios from "axios";
 import TrendingPost from "../../components/TrendingPost/TrendingPost";
 import SongItem from "../../components/SongItem/SongItem";
 
@@ -17,9 +15,9 @@ function SinglePost() {
   return (
     <GeneralLayout>
       <div className="flex flex-row py-8 gap-8">
-        <div className="w-3/4 flex flex-col space-y-8 ">
+        <div className="md:w-3/4 w-full flex flex-col space-y-8 ">
           <div className="flex flex-col items-center bg-white rounded shadow p-4">
-            <div className="picture h-[400px] w-[400px] rounded">
+            <div className="picture md:h-[400px] md:w-[400px] h-72 w-72 rounded">
               <Image
                 src={picture}
                 layout="responsive"
@@ -72,9 +70,9 @@ function SinglePost() {
               </div>
             </button>
           </div>
-          <div className="related bg-white rounded p-4 shadow">
+          <div className="related rounded md:p-4 md:shadow md:bg-white">
             <p className="text-gray-700 font-semibold pb-4">Related Music</p>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
               {
                 [1,2,3,4].map((item, index)=>(
                   <SongItem
@@ -89,14 +87,19 @@ function SinglePost() {
             </div>
           </div>
         </div>
-        <div className="w-1/4 flex flex-col">
+        <div className="w-1/4 md:flex hidden flex-col">
           <div className="flex flex-col bg-white p-4 shadow">
             <p className="text-gray-800 font-semibold text-center capitalize pb-4">
               trending music
             </p>
             <div className="flex flex-col space-y-4">
               {[1, 2, 3, 4, 5].map((item, index) => (
-                <TrendingPost />
+                <TrendingPost 
+                  artist_name={'Winky D'}
+                  item_name={'Gafa Life'}
+                  category={'Dancehall Album'}
+                  picture={picture}
+                />
               ))}
             </div>
           </div>

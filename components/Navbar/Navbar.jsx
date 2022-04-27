@@ -44,7 +44,7 @@ function Navbar() {
                   </div>
                 </div>
                 <div className="hidden lg:block lg:ml-6">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-2">
                     {data.categories.map((category, index) => (
                       <Link
                         key={index + category.name}
