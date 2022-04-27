@@ -21,10 +21,11 @@ function LatestMusic({heading, music}) {
       {music?.map((item, index) => (
         <SongItem
           key={index}
-          category={"Naija"}
-          item_name="Gafa Life"
-          artist_name={"Winky D"}
+          category={item.category}
+          item_name={item.item_name}
+          artist_name={item.artist}
           picture={cover_1}
+          id={item._id}
         />
       ))}
     </div>

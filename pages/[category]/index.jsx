@@ -52,7 +52,9 @@ function Category() {
           </Breadcrumb>
         </div>
         <>
-            <MusicPotion heading={current_category?.name} music={[1,2,3,4,5,6,7,7,7,75,65,65,6,5,65,6,5,65,6,5,65,6,5,65,6,5]} />
+            <MusicPotion 
+              heading={current_category?.name} 
+              music={[1,2,3,4,5,6,7,7,7,75,65,65,6,5,65,6,5,65,6,5,65,6,5,65,6,5]} />
         </>
       </div>
     </GeneralLayout>

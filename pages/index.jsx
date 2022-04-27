@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
+import data from "../utils/data";
 
 export default function Home() {
   return (
@@ -29,7 +30,7 @@ export default function Home() {
         </div>
         {/* // latest music */}
         <>
-          <LatestMusic heading={"Latest Music"} music={[1, 2, 3, 4, 5, 6]} />
+          <LatestMusic heading={"Latest Music"} music={data.posts} />
         </>
 
         {/* // naija music */}
