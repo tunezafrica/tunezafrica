@@ -22,7 +22,7 @@ function MusicPotion({ heading, music }) {
           <SongItem
             key={index}
             category={"Naija"}
-            item_name="Gafa Life"
+            item_name="Gafa Life" 
             artist_name={"Winky D"}
             picture={cover_1}
           />

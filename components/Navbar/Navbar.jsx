@@ -1,6 +1,6 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import { SearchIcon } from "@heroicons/react/solid";
+import { SearchIcon,ChevronDownIcon } from "@heroicons/react/solid";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import data from "../../utils/data";
 import { useRouter } from "next/router";
@@ -56,9 +56,10 @@ function Navbar() {
                             router.asPath === category.location
                               ? "bg-gray-200"
                               : ""
-                          } hover:bg-gray-200 text-gray-900 px-3 py-2 cursor-pointer rounded-md text-sm font-medium`}
+                          } hover:bg-gray-200 text-gray-900 p-2 cursor-pointer rounded-md text-sm flex flex-row items-center justify-between font-medium`}
                         >
                           {category.name}
+                          <ChevronDownIcon height={16} width={16} className="text-gray-700" />
                         </a>
                       </Link>
                     ))}
@@ -80,7 +81,7 @@ function Navbar() {
                     <input
                       id="search"
                       name="search"
-                      className="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm"
+                      className="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-200 text-gray-700 placeholder-gray-500 focus:outline-none focus:bg-gray-100 focus:border-white focus:ring-gray-100 focus:text-gray-900 sm:text-sm"
                       placeholder="Search"
                       type="search"
                     />

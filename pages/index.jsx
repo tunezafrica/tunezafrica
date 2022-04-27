@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import data from "../utils/data";
+import MusicPotion from "../components/music_components/MusicPotion";
 
 export default function Home() {
   return (
@@ -35,12 +36,12 @@ export default function Home() {
 
         {/* // naija music */}
         <>
-          <LatestMusic heading={"Trending Music"} music={[1, 2, 3, 4, 5, 6]} />
+          <LatestMusic heading={"Trending Music"} music={data.posts} />
         </>
 
         {/* // hip hip */}
         <>
-          <LatestMusic heading={"Hip-Hop Music"} music={[1, 2, 3, 4, 5, 6]} />
+          <MusicPotion heading={"Hip-Hop Music"} music={[1, 2, 3, 4, 5, 6]} />
         </>
       </div>
     </GeneralLayout>
