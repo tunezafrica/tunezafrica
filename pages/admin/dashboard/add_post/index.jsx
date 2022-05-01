@@ -3,6 +3,11 @@ import DashboardLayout from "../../../../layouts/DashboardLayout";
 
 function AddPost() {
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [sub_category, setSubCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [music, setMusic] = useState([]);
+
   const handle_post_upload = () => {
     console.log(name);
   };
@@ -58,8 +63,11 @@ function AddPost() {
             />
           </div>
           <div className="flex flex-col col-span-2 ">
-            <div className="flex flex-col w-full bg-green-700 hover:bg-green-600 cursor-pointer p-2 rounded-full text-center text-white font-semibold">
-                upload item
+            <div
+              onClick={handle_post_upload}
+              className="flex flex-col w-full bg-green-700 hover:bg-green-600 cursor-pointer p-2 rounded-full text-center text-white font-semibold"
+            >
+              upload item
             </div>
           </div>
         </div>
