@@ -1,6 +1,6 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import { SearchIcon,ChevronDownIcon } from "@heroicons/react/solid";
+import { SearchIcon,ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import data from "../../utils/data";
 import { useRouter } from "next/router";
@@ -8,8 +8,16 @@ import logo from "../../public/icon.png";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "../Search/Search";
+import {
+  useDisclosure,
+  MenuItem,
+  Menu,
+  MenuButton,
+  MenuList,
+} from "@chakra-ui/react"
 
 function Navbar() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter();
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -46,6 +54,7 @@ function Navbar() {
                 </div>
                 <div className="hidden lg:block lg:ml-6">
                   <div className="flex space-x-2">
+                    
                     {data.categories.map((category, index) => (
                       <Link
                         key={index + category.name}
