@@ -1,5 +1,5 @@
-import auth_handler from "../../utils/auth_handler";
 import { connect } from "../../utils/mongo";
+import auth_handler from '../../../utils/auth_handler'
 
 //create a post
 // post request

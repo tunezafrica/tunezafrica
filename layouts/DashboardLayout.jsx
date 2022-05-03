@@ -19,8 +19,8 @@ function DashboardLayout({ children }) {
 
   return (
     <>
-      <div className="relative h-screen flex overflow-hidden bg-gray-100">
-        <div className="h-full">
+      <div className="relative min-h-screen flex overflow-hidden bg-gray-100">
+        <div className="h-full sticky top-0 left-0">
           <DashboardSidebar
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
