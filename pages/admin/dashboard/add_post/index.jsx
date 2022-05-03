@@ -83,6 +83,8 @@ function AddPost() {
         },
         (error) => {
           alert(error);
+          console.log(error)
+          setLoading(false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -109,8 +111,6 @@ function AddPost() {
           });
         }
       );
-
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.log(error);

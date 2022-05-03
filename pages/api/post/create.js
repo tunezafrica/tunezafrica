@@ -1,5 +1,5 @@
-import { connect } from "../../utils/mongo";
-import auth_handler from '../../../utils/auth_handler'
+import { connect } from "../../../utils/mongo";
+import auth_handler from "../../../utils/auth_handler";
 
 //create a post
 // post request
@@ -9,10 +9,16 @@ auth_handler.post(async (req, res) => {
     await connect();
 
     const _user = req.user;
-    const { title, description, category, sub_category } = req.body;
+    if (_user.role === "admin") {
+      const { title, description, category, sub_category } = req.body;
+      console.log("you are allowed to add to database");
+      return res.status(200).send("Successfully added music");
+    } else {
+      return res.send("Not allowed to add to database");
+    }
   } catch (error) {
     return res.send(error);
   }
 });
 
-export default auth_handler
+export default auth_handler;
