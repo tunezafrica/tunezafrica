@@ -9,10 +9,8 @@ import bcrypt from 'bcryptjs'
 // /api/auth/register
 handler.post(async (req, res) => {
     await connect()
-    const { email, password, name, agreed } = req.body
-    if(!agreed){
-        res.status(401).send('Your have to agree to our terms and conditions')
-    }
+    const { email, password, name } = req.body
+   
     const user = await Users.findOne({ email: email })
     
     if (user) {
@@ -22,7 +20,8 @@ handler.post(async (req, res) => {
     const newUser = new Users({
         name: name,
         email: email,
-        password: bcrypt.hashSync(password, 12)
+        password: bcrypt.hashSync(password, 12),
+        role: 'user'
     })
     
     await newUser.save()
