@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import nc from 'next-connect'
 import Users from '../../../models/User'
 const handler = nc()

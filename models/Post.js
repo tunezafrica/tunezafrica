@@ -25,6 +25,15 @@ const postSchema = new mongoose.Schema(
     all_songs: {
       type: Array,
     },
+    download_link: {
+      type: String,
+      required: true,
+      default: "",
+    },
+    artist: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

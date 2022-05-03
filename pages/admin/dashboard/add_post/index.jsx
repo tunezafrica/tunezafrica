@@ -1,10 +1,14 @@
 import { PlusIcon } from "@heroicons/react/outline";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DashboardLayout from "../../../../layouts/DashboardLayout";
 import { Button, Select } from "@chakra-ui/react";
 import data from "../../../../utils/data";
 import slugify from "../../../../utils/slugify";
 import AddSongs from "../../../../components/AddSongs/AddSongs";
+import axios from "axios";
+import { storage } from "../../../../utils/firebase";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { Store } from "../../../../Context/Store";
 
 function AddPost() {
   const [name, setName] = useState("");
@@ -12,6 +16,13 @@ function AddPost() {
   const [sub_category, setSubCategory] = useState("");
   const [description, setDescription] = useState("");
   const [music, setMusic] = useState([]);
+  const [artist, setArtist] = useState('')
+  const [link, setLink] = useState("");
+
+  const { state } = useContext(Store);
+  const { tunezUserInfo } = state;
+
+  const [loading, setLoading] = useState(false);
 
   const [current_cat_obj, setCurrentCategory] = useState();
 
@@ -53,7 +64,57 @@ function AddPost() {
     setCurrentCategory(tuna);
   }, [category]);
 
-  const handle_post_upload = () => {
+  const handle_post_upload = async () => {
+    try {
+      setLoading(true);
+      const storageRef = ref(
+        storage,
+        `files/${selectedFile.name}-${Date.now()}`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          console.log(progress);
+        },
+        (error) => {
+          alert(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            console.log(downloadURL);
+            await axios.post(
+              "/api/post/create",
+              {
+                picture: downloadURL,
+                title: name,
+                description: description,
+                category: category,
+                sub_category: sub_category,
+                all_songs: music,
+                download_link: link,
+                artist: artist
+              },
+              {
+                headers: {
+                  Authorization: tunezUserInfo.token,
+                },
+              }
+            );
+            setLoading(false);
+          });
+        }
+      );
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
     console.log(category, name);
   };
 
@@ -93,6 +154,17 @@ function AddPost() {
                 )}
               </div>
             </div>
+          </div>
+          <div className="flex flex-col col-span-2 ">
+            <p className="text-gray-700 font-semibold text-sm p-1">
+              artist
+            </p>
+            <input
+              type="text"
+              placeholder="item name or title"
+              className="p-2 rounded border border-gray-300 outline-none"
+              onChange={(e) => setArtist(e.target.value)}
+            />
           </div>
           <div className="flex flex-col col-span-2 ">
             <p className="text-gray-700 font-semibold text-sm p-1">
@@ -157,6 +229,17 @@ function AddPost() {
           </div>
           <div className="flex flex-col col-span-2 ">
             <p className="text-gray-700 font-semibold text-sm p-1">
+              Download link
+            </p>
+            <input
+              type="text"
+              placeholder="item name or title"
+              className="p-2 rounded border border-gray-300 outline-none"
+              onChange={(e) => setLink(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col col-span-2 ">
+            <p className="text-gray-700 font-semibold text-sm p-1">
               Songs / Song
             </p>
             <>
@@ -167,6 +250,7 @@ function AddPost() {
             <Button
               colorScheme={"green"}
               rounded="full"
+              isLoading={loading}
               onClick={handle_post_upload}
             >
               upload item
