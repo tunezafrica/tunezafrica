@@ -13,11 +13,11 @@ function Login() {
   const history = useRouter();
 
   const { state, dispatch } = useContext(Store);
-  const { userInfo } = state;
+  const { tunezUserInfo } = state;
   const { redirect } = history.query;
 
   useEffect(() => {
-    if (userInfo) {
+    if (tunezUserInfo) {
       history.push("/admin/dashboard");
     }
   }, []);
@@ -59,7 +59,7 @@ function Login() {
         password: password,
       });
       dispatch({ type: "USER_LOGIN", payload: data });
-      Cookies.set("userInfo", JSON.stringify(data));
+      Cookies.set("tunezUserInfo", JSON.stringify(data));
       setTimeout(() => {
         history.push(redirect || "/");
       }, 1000);
