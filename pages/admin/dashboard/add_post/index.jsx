@@ -1,9 +1,10 @@
 import { PlusIcon } from "@heroicons/react/outline";
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../../../../layouts/DashboardLayout";
-import { Select } from "@chakra-ui/react";
+import { Button, Select } from "@chakra-ui/react";
 import data from "../../../../utils/data";
 import slugify from "../../../../utils/slugify";
+import AddSongs from "../../../../components/AddSongs/AddSongs";
 
 function AddPost() {
   const [name, setName] = useState("");
@@ -12,10 +13,14 @@ function AddPost() {
   const [description, setDescription] = useState("");
   const [music, setMusic] = useState([]);
 
-  const [current_cat_obj, setCurrentCategory] = useState()
+  const [current_cat_obj, setCurrentCategory] = useState();
 
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+
+  const selectedTags = (tags) => {
+    setMusic(tags);
+  };
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -48,8 +53,6 @@ function AddPost() {
     setCurrentCategory(tuna);
   }, [category]);
 
-  console.log(current_cat_obj)
-
   const handle_post_upload = () => {
     console.log(category, name);
   };
@@ -66,7 +69,7 @@ function AddPost() {
               Featured Image
             </p>
             <div className="flex flex-row space-x-4 items-center">
-              <div className="relative flex-row col-span-1 h-40 w-40 rounded-lg border bg-gray-200 border-dashed border-gray-500 flex justify-center items-center">
+              <div className="relative flex-row col-span-1 h-32 w-32 rounded-lg border bg-gray-200 border-dashed border-gray-500 flex justify-center items-center">
                 <div className="absolute">
                   <div className="flex flex-col items-center">
                     <PlusIcon
@@ -124,7 +127,11 @@ function AddPost() {
             </p>
             <Select
               bg={"white"}
-              placeholder={current_cat_obj?.sub_categories[0].name ? current_cat_obj?.sub_categories[0].name : 'No category selected'}
+              placeholder={
+                current_cat_obj?.sub_categories[0].name
+                  ? current_cat_obj?.sub_categories[0].name
+                  : "No category selected"
+              }
               onChange={(e) => setSubCategory(e.target.value)}
               defaultValue={current_cat_obj?.sub_categories[0].name}
               className="rounded border border-gray-300 outline-none"
@@ -141,20 +148,29 @@ function AddPost() {
               description
             </p>
             <textarea
-              rows={15}
+              rows={5}
               type="text"
-              placeholder="item name or title"
+              placeholder="item description"
               className="p-2 rounded border border-gray-300 outline-none"
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <div className="flex flex-col col-span-2 ">
-            <div
+            <p className="text-gray-700 font-semibold text-sm p-1">
+              Songs / Song
+            </p>
+            <>
+              <AddSongs selectedTags={selectedTags} className="" />
+            </>
+          </div>
+          <div className="flex flex-col col-span-2 ">
+            <Button
+              colorScheme={"green"}
+              rounded="full"
               onClick={handle_post_upload}
-              className="flex flex-col w-full bg-green-700 hover:bg-green-600 cursor-pointer p-2 rounded-full text-center text-white font-semibold"
             >
               upload item
-            </div>
+            </Button>
           </div>
         </div>
       </div>
