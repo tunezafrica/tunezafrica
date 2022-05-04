@@ -12,7 +12,7 @@ auth_handler.post(async (req, res) => {
     const _user = req.user;
     if (_user.role === "admin") {
       const { title, description, category, sub_category, picture, artist } = req.body;
-      const new_post = Post({
+      const new_post = new Post({
         picture: picture,
         title: title,
         description: description,
