@@ -1,16 +1,15 @@
 import GeneralLayout from "../layouts/GeneralLayout";
 import LatestMusic from "../components/music_components/LatestMusic";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from "@chakra-ui/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import data from "../utils/data";
 import MusicPotion from "../components/music_components/MusicPotion";
+import Post from "../models/Post";
+import { connect, convertDocToObj, disconnect } from "../utils/mongo";
 
-export default function Home() {
+export default function Home(props) {
+  const { posts } = props;
+
   return (
     <GeneralLayout
       title={"Home Page"}
@@ -31,7 +30,7 @@ export default function Home() {
         </div>
         {/* // latest music */}
         <>
-          <LatestMusic heading={"Latest Music"} music={data.posts} />
+          <LatestMusic heading={"Latest Music"} music={posts} />
         </>
 
         {/* // naija music */}
@@ -46,4 +45,16 @@ export default function Home() {
       </div>
     </GeneralLayout>
   );
+}
+
+export async function getServerSideProps(context) {
+  await connect();
+  const posts = await Post.find({}).sort({createdAt: -1}).lean();
+  console.log(posts);
+  await disconnect();
+  return {
+    props: {
+      posts: posts?.map(convertDocToObj),
+    },
+  };
 }

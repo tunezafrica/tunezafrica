@@ -1,7 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import React from 'react'
 import SongItem from '../SongItem/SongItem'
-import cover_1 from "../../public/cover.jpg";
 
 function LatestMusic({heading, music}) {
   return (
@@ -22,9 +21,9 @@ function LatestMusic({heading, music}) {
         <SongItem
           key={index}
           category={item.category}
-          item_name={item.item_name}
+          item_name={item.title}
           artist_name={item.artist}
-          picture={cover_1}
+          picture={item.picture}
           id={item._id}
         />
       ))}
