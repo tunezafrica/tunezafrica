@@ -8,7 +8,7 @@ import Post from "../models/Post";
 import { connect, convertDocToObj, disconnect } from "../utils/mongo";
 
 export default function Home(props) {
-  const { posts } = props;
+  const { posts, trending_posts } = props;
 
   return (
     <GeneralLayout
@@ -35,7 +35,7 @@ export default function Home(props) {
 
         {/* // naija music */}
         <>
-          <LatestMusic heading={"Trending Music"} music={data.posts} />
+          <LatestMusic heading={"Trending Music"} music={trending_posts} />
         </>
 
         {/* // hip hip */}
@@ -50,11 +50,13 @@ export default function Home(props) {
 export async function getServerSideProps(context) {
   await connect();
   const posts = await Post.find({}).sort({createdAt: -1}).lean();
+  const trending_posts = await Post.find({}).lean()
   console.log(posts);
   await disconnect();
   return {
     props: {
       posts: posts?.map(convertDocToObj),
+      trending_posts: JSON.parse(JSON.stringify(trending_posts)),
     },
   };
 }
