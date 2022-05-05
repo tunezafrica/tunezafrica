@@ -24,11 +24,13 @@ function Posts() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const { data } = await axios.get(`/api/post`);
+      const { data } = await axios.post(`/api/post`,{
+        query: query
+      });
       setAllPosts(data);
     };
     getPosts();
-  }, []);
+  }, [query]);
 
   console.log(all_posts);
 
