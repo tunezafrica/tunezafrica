@@ -27,7 +27,6 @@ const postSchema = new mongoose.Schema(
     },
     download_link: {
       type: String,
-      required: true,
       default: "",
     },
     artist: {

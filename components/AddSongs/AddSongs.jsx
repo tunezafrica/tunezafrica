@@ -1,24 +1,36 @@
 import React, { useState } from "react";
 import { XIcon } from "@heroicons/react/outline";
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Text, useToast } from "@chakra-ui/react";
 
 export default function AddSongs(props) {
   const [variations, setVariants] = useState([]);
   const [variant_name, setVarinatName] = useState("");
+  const toast = useToast();
 
   const addTags = () => {
-    setVariants([
-      ...variations,
-      {
-        variant: variant_name,
-      },
-    ]);
-    props.selectedTags([
-      ...variations,
-      {
-        variant: variant_name,
-      },
-    ]);
+    if (!variant_name) {
+      toast({
+        title: "Field must not be empty!.",
+        status: "error",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
+    } else {
+      setVariants([
+        ...variations,
+        {
+          variant: variant_name,
+        },
+      ]);
+      props.selectedTags([
+        ...variations,
+        {
+          variant: variant_name,
+        },
+      ]);
+      setVarinatName("");
+    }
   };
 
   const removeTags = (index) => {
@@ -79,6 +91,7 @@ export default function AddSongs(props) {
         <input
           type="text"
           name="name"
+          value={variant_name}
           onChange={(e) => setVarinatName(e.target.value)}
           id="name"
           autoComplete="name"

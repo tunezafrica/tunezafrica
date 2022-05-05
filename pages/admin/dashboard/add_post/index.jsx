@@ -1,7 +1,7 @@
 import { PlusIcon } from "@heroicons/react/outline";
 import React, { useState, useEffect, useContext } from "react";
 import DashboardLayout from "../../../../layouts/DashboardLayout";
-import { Button, Select } from "@chakra-ui/react";
+import { Button, Select, useToast } from "@chakra-ui/react";
 import data from "../../../../utils/data";
 import slugify from "../../../../utils/slugify";
 import AddSongs from "../../../../components/AddSongs/AddSongs";
@@ -16,8 +16,9 @@ function AddPost() {
   const [sub_category, setSubCategory] = useState("");
   const [description, setDescription] = useState("");
   const [music, setMusic] = useState([]);
-  const [artist, setArtist] = useState('')
+  const [artist, setArtist] = useState("");
   const [link, setLink] = useState("");
+  const toast = useToast();
 
   const { state } = useContext(Store);
   const { tunezUserInfo } = state;
@@ -65,57 +66,75 @@ function AddPost() {
   }, [category]);
 
   const handle_post_upload = async () => {
-    try {
-      setLoading(true);
-      const storageRef = ref(
-        storage,
-        `files/${selectedFile.name}-${Date.now()}`
-      );
-      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+    if (!name || !artist || !category) {
+      toast({
+        title: "Some fields are empty!.",
+        status: "error",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
+    } else {
+      try {
+        setLoading(true);
+        const storageRef = ref(
+          storage,
+          `files/${selectedFile.name}-${Date.now()}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log(progress);
-        },
-        (error) => {
-          alert(error);
-          console.log(error)
-          setLoading(false)
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log(downloadURL);
-            await axios.post(
-              "/api/post/create",
-              {
-                picture: downloadURL,
-                title: name,
-                description: description,
-                category: category,
-                sub_category: sub_category,
-                all_songs: music,
-                download_link: link,
-                artist: artist
-              },
-              {
-                headers: {
-                  Authorization: tunezUserInfo.token,
-                },
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            console.log(progress);
+          },
+          (error) => {
+            alert(error);
+            console.log(error);
+            setLoading(false);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(
+              async (downloadURL) => {
+                console.log(downloadURL);
+                await axios.post(
+                  "/api/post/create",
+                  {
+                    picture: downloadURL,
+                    title: name,
+                    description: description,
+                    category: category,
+                    sub_category: sub_category,
+                    music: music,
+                    download_link: link,
+                    artist: artist,
+                  },
+                  {
+                    headers: {
+                      Authorization: tunezUserInfo.token,
+                    },
+                  }
+                );
+                toast({
+                  title: "Item added successfully.",
+                  status: "success",
+                  duration: 5000,
+                  position: "top-right",
+                  isClosable: true,
+                });
+                setLoading(false);
               }
             );
-            setLoading(false);
-          });
-        }
-      );
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+          }
+        );
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
-    console.log(category, name);
   };
 
   return (
@@ -156,9 +175,7 @@ function AddPost() {
             </div>
           </div>
           <div className="flex flex-col col-span-2 ">
-            <p className="text-gray-700 font-semibold text-sm p-1">
-              artist
-            </p>
+            <p className="text-gray-700 font-semibold text-sm p-1">artist</p>
             <input
               type="text"
               placeholder="item name or title"
@@ -229,7 +246,7 @@ function AddPost() {
           </div>
           <div className="flex flex-col col-span-2 ">
             <p className="text-gray-700 font-semibold text-sm p-1">
-              Download link
+              Download link (Optional)
             </p>
             <input
               type="text"
