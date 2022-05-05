@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PencilIcon, SearchIcon, TrashIcon } from "@heroicons/react/outline";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import {
@@ -9,13 +9,28 @@ import {
   ModalBody,
   useDisclosure,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import axios from "axios";
+import moment from "moment";
 
 function Posts() {
   const [query, setQuery] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter()
+  const router = useRouter();
+
+  const [all_posts, setAllPosts] = useState();
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const { data } = await axios.get(`/api/post`);
+      setAllPosts(data);
+    };
+    getPosts();
+  }, []);
+
+  console.log(all_posts);
 
   const search_items = (e) => {
     e.preventDefault();
@@ -50,7 +65,10 @@ function Posts() {
             <p className="text-gray-700 font-semibold text-lg">
               A list of all posts made
             </p>
-            <span onClick={() => router.push('/admin/dashboard/add_post')} className="p-2 rounded cursor-pointer hover:bg-green-600 bg-green-700 text-sm text-white font-semibold">
+            <span
+              onClick={() => router.push("/admin/dashboard/add_post")}
+              className="p-2 rounded cursor-pointer hover:bg-green-600 bg-green-700 text-sm text-white font-semibold"
+            >
               Add Post
             </span>
           </div>
@@ -63,23 +81,29 @@ function Posts() {
             <div className="col-span-1"> artist</div>
             <div className="col-span-1">actions</div>
           </div>
-          <div className="grid grid-cols-5 gap-4 p-2 border-b border-gray-300">
-            <div className="col-span-1"> name</div>
-            <div className="col-span-1"> category</div>
-            <div className="col-span-1"> date</div>
-            <div className="col-span-1"> artist</div>
-            <div className="col-span-1 flex flex-row items-center gap-8">
-              <div className="cursor-pointer hover:bg-gray-200 rounded-full p-1">
-                <PencilIcon height={20} width={20} className="text-blue-500" />
-              </div>
-              <div
-                onClick={() => onOpen()}
-                className="cursor-pointer hover:bg-gray-200 rounded-full p-1"
-              >
-                <TrashIcon height={20} width={20} className="text-red-400" />
+          {all_posts?.map((post, index) => (
+            <div key={index} className="grid grid-cols-5 gap-4 p-2 border-b border-gray-300">
+              <Text noOfLines={1} className="col-span-1"> {post.title}</Text>
+              <div className="col-span-1"> {post.category}</div>
+              <div className="col-span-1"> {moment(post.createdAt).fromNow()}</div>
+              <div className="col-span-1"> {post.artist}</div>
+              <div className="col-span-1 flex flex-row items-center gap-8">
+                <div className="cursor-pointer hover:bg-gray-200 rounded-full p-1">
+                  <PencilIcon
+                    height={20}
+                    width={20}
+                    className="text-blue-500"
+                  />
+                </div>
+                <div
+                  onClick={() => onOpen()}
+                  className="cursor-pointer hover:bg-gray-200 rounded-full p-1"
+                >
+                  <TrashIcon height={20} width={20} className="text-red-400" />
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 

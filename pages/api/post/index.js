@@ -1,4 +1,4 @@
-import { connect } from "../../../utils/mongo";
+import { connect, disconnect } from "../../../utils/mongo";
 import Post from "../../../models/Post";
 import nc from 'next-connect'
 const handler = nc()
@@ -12,7 +12,10 @@ handler.get(async (req, res) => {
 
     const posts = await Post.find({})
 
-    console.log(posts)
+    return res.status(200).send(posts)
+
+    await disconnect()
+    
   } catch (error) {
     return res.send(error);
   }
