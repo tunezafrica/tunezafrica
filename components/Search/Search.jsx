@@ -85,7 +85,7 @@ function Search() {
                         <div
                           onClick={() => router.push(`/post/${item._id}`)}
                           key={index}
-                          className="flex cursor-default flex-row items-center p-2"
+                          className="flex cursor-pointer flex-row items-center p-2  hover:bg-gray-100"
                         >
                           {/* <Avatar src={item.picture}   rounded={"md"} /> */}
                           <div className="relative h-14 rounded w-14 overflow-hidden">
