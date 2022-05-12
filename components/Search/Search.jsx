@@ -5,7 +5,6 @@ import {
   ModalBody,
   ModalContent,
   ModalOverlay,
-  Avatar,
   Text,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@heroicons/react/outline";

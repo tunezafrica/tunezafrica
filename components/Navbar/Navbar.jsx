@@ -1,6 +1,6 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import { SearchIcon,ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import data from "../../utils/data";
 import { useRouter } from "next/router";
@@ -8,16 +8,8 @@ import logo from "../../public/icon.png";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "../Search/Search";
-import {
-  useDisclosure,
-  MenuItem,
-  Menu,
-  MenuButton,
-  MenuList,
-} from "@chakra-ui/react"
 
 function Navbar() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter();
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -27,7 +19,10 @@ function Navbar() {
             <div className="relative flex items-center justify-between h-16">
               <div className="flex items-center px-2 lg:px-0">
                 <div className="flex-shrink-0">
-                  <div onClick={() => router.push("/")} className="lg:hidden block">
+                  <div
+                    onClick={() => router.push("/")}
+                    className="lg:hidden block"
+                  >
                     <Image
                       className="block lg:hidden h-8 w-auto"
                       src={logo}
@@ -54,31 +49,65 @@ function Navbar() {
                 </div>
                 <div className="hidden lg:block lg:ml-6">
                   <div className="flex space-x-2">
-                    
-                    {data.categories.map((category, index) => (
-                      <Link
-                        key={index + category.name}
-                        href={category.location}
-                        passHref
+                    <Link href={"/"} passHref>
+                      <a
+                        className={`${
+                          router.asPath === "/" ? "bg-gray-200" : ""
+                        } hover:bg-gray-200 text-gray-900 p-2 cursor-pointer rounded-md text-sm flex flex-row items-center justify-between font-medium`}
                       >
-                        <a
-                          className={`${
-                            router.asPath === category.location
-                              ? "bg-gray-200"
-                              : ""
-                          } hover:bg-gray-200 text-gray-900 p-2 cursor-pointer rounded-md text-sm flex flex-row items-center justify-between font-medium`}
+                        Home
+                      </a>
+                    </Link>
+
+                    {data.categories.map((category, index) => (
+                      <div className="group relative dropdown">
+                        <Link
+                          key={index + category.name}
+                          href={category.location}
+                          passHref
                         >
-                          {category.name}
-                          <ChevronDownIcon height={16} width={16} className="text-gray-700" />
-                        </a>
-                      </Link>
+                          <a
+                            className={`${
+                              router.asPath === category.location
+                                ? "bg-gray-200"
+                                : ""
+                            }  hover:bg-gray-200 text-gray-900 p-2 cursor-pointer rounded-md text-sm flex flex-row items-center justify-between font-medium`}
+                          >
+                            {category.name}
+                            <ChevronDownIcon
+                              height={16}
+                              width={16}
+                              className="text-gray-700"
+                            />
+                          </a>
+                        </Link>
+                        <div className="group-hover:block dropdown-menu absolute hidden h-auto z-40">
+                          <ul class="top-0 w-48 bg-white shadow p-2 rounded-lg">
+                            {category?.sub_categories?.map((item, index) => (
+                              <li
+                                key={index}
+                                class="p-2 hover:bg-gray-100 rounded flex flex-row items-center justify-between"
+                              >
+                                <a class="block text-gray-700 text-sm capitalize cursor-pointer">
+                                  {item.name}
+                                </a>
+                                <ChevronRightIcon
+                                  height={16}
+                                  width={16}
+                                  className="text-gray-700"
+                                />
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
               <div className="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
                 <>
-                          <Search/>
+                  <Search />
                 </>
               </div>
               <div className="flex lg:hidden">
@@ -103,7 +132,9 @@ function Navbar() {
                   key={index}
                   as="a"
                   href={category.location}
-                  className={`${router.asPath === category.location ? "bg-gray-200" : "" } hover:bg-gray-200 w-full text-gray-700 block px-3 py-2 rounded-md text-sm font-semibold`}
+                  className={`${
+                    router.asPath === category.location ? "bg-gray-200" : ""
+                  } hover:bg-gray-200 w-full text-gray-700 block px-3 py-2 rounded-md text-sm font-semibold`}
                 >
                   {category.name}
                 </Disclosure.Button>

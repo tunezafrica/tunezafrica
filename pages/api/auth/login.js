@@ -14,7 +14,7 @@ handler.post(async (req, res) => {
     const _user = await Users.findOne({ email: email })
 
     if(!_user){
-        res.status(404).send({message: 'Account does not exist!'})
+        return res.status(404).send({message: 'Account does not exist!'})
     }
 
     await disconnect()
@@ -28,7 +28,7 @@ handler.post(async (req, res) => {
         }, process.env.JWT_SECRET, {
             expiresIn: '30d'
         })
-        res.send({
+        return res.send({
             token,
             _id: _user._id,
             email: _user.email,
@@ -36,7 +36,7 @@ handler.post(async (req, res) => {
             name: _user.name
         })
     } else {
-        res.status(401).send('Invalid email or password')
+        return res.status(401).send('Invalid email or password')
     }
 
 })

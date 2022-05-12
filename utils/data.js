@@ -1,11 +1,6 @@
 const data = {
   categories: [
     {
-      name: "Home",
-      description: "",
-      location: "/",
-    },
-    {
       name: "Hip-Hop",
       description: "",
       location: "/hip-hop",
