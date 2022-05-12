@@ -13,10 +13,16 @@ function SinglePost(props) {
 
   const { page_post, related_posts, trending_posts } = props;
 
-  console.log(related_posts);
+  console.log(page_post);
 
   return (
-    <GeneralLayout>
+    <GeneralLayout
+      title={page_post?.title}
+      description={page_post?.description}
+      og_image={page_post?.picture}
+      twitter_description={page_post?.description}
+      twitter_title={page_post?.title}
+    >
       <div className="flex flex-row py-8 gap-8">
         <div className="md:w-3/4 w-full flex flex-col space-y-8 ">
           <div className="flex flex-col items-center bg-white rounded shadow p-4">
@@ -44,6 +50,23 @@ function SinglePost(props) {
               <p>
                 Genre: <span>{page_post?.category}</span>
               </p>
+            </div>
+            <p className="text-gray-800 font-semibold text-lg py-2">
+              Item Included
+            </p>
+            <div className="flex flex-col items-start py-4 w-full">
+              {/* {page_post} */}
+              {page_post?.all_songs?.map((item, index) => (
+                <p
+                  key={index}
+                  className={`${
+                    index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  } text-gray-700 p-2 rounded w-full`}
+                >
+                  <span className="font-semibold mr-4">{index + 1}.</span>
+                  {item.variant}
+                </p>
+              ))}
             </div>
             <div className="flex text-gray-700 text-center flex-col items-center">
               {page_post?.description}
@@ -115,8 +138,10 @@ export async function getServerSideProps(context) {
   const { post } = params;
   await connect();
   const _post = await Post.findOne({ _id: post }).lean();
-  const related_posts = await Post.find({ category: _post.category }).sort({ createdAt: -1 }).lean();
-  const trending_posts = await Post.find({}).lean()
+  const related_posts = await Post.find({ category: _post.category })
+    .sort({ createdAt: -1 })
+    .lean();
+  const trending_posts = await Post.find({}).lean();
 
   await disconnect();
   return {

@@ -9,9 +9,15 @@ const handler = nc();
 handler.post(async (req, res) => {
   try {
     await connect();
+
+
     const queryString = req.body.query;
     const queryStrings = queryString.split(" ");
     let allQueries = [];
+
+    // for pagination
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
 
     queryStrings.forEach((element) => {
       let regex = new RegExp(element, "i");
