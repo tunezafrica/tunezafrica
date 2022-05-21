@@ -9,6 +9,7 @@ import axios from "axios";
 import { storage } from "../../../../utils/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { Store } from "../../../../Context/Store";
+import Image from 'next/image'
 
 function AddPost() {
   const [name, setName] = useState("");
