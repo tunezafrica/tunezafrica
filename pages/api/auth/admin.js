@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 // login user
 // login user
 // /api/auth/admin
-handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.post(async (req, res) => {
     await connect()
     const { email, password } = req.body
     const _user = await Users.findOne({ email: email })
