@@ -8,7 +8,7 @@ function Footer() {
   return (
     <div className="flex flex-row items-center justify-around py-4 px-16 border-t border-gray-200 bg-gray-200">
       {data.categories.map((category, index) => (
-        <div className="flex flex-col items-center">
+        <div key={index} className="flex flex-col items-center">
           <Link key={index + category.name} href={category.location} passHref>
             <a
               className={`${

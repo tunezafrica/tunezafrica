@@ -61,7 +61,7 @@ function Navbar() {
                     </Link>
 
                     {data.categories.map((category, index) => (
-                      <div className="group relative dropdown">
+                      <div key={index} className="group relative dropdown">
                         <Link
                           key={index + category.name}
                           href={category.location}
@@ -83,13 +83,13 @@ function Navbar() {
                           </a>
                         </Link>
                         <div className="group-hover:block dropdown-menu absolute hidden h-auto z-40">
-                          <ul class="top-0 w-48 bg-white shadow p-2 rounded-lg">
+                          <ul className="top-0 w-48 bg-white shadow p-2 rounded-lg">
                             {category?.sub_categories?.map((item, index) => (
                               <li
                                 key={index}
-                                class="p-2 hover:bg-gray-100 rounded flex flex-row items-center justify-between"
+                                className="p-2 hover:bg-gray-100 rounded flex flex-row items-center justify-between"
                               >
-                                <a class="block text-gray-700 text-sm capitalize cursor-pointer">
+                                <a className="block text-gray-700 text-sm capitalize cursor-pointer">
                                   {item.name}
                                 </a>
                                 <ChevronRightIcon

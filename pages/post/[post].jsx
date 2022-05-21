@@ -73,7 +73,7 @@ function SinglePost(props) {
             </div>
             <div className="spotify_preview flex py-4 w-full">
               <div className="overflow-hidden w-full rounded flex flex-col items-center">
-                <iframe
+                {/* <iframe
                   src="https://open.spotify.com/album/1fwbLCqW34SjVx1hpjpVlQ?si=FYtbyMJJTXivaLqjZ7NoGw"
                   width="100%"
                   height="200"
@@ -81,7 +81,7 @@ function SinglePost(props) {
                   allowtransparency="true"
                   allow="encrypted-media"
                   style={{ float: "left" }}
-                ></iframe>
+                ></iframe> */}
               </div>
             </div>
             {/* <div className="apple_music preview">apple music</div> */}
