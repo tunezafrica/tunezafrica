@@ -12,7 +12,8 @@ import Search from "../Search/Search";
 function Navbar() {
   const router = useRouter();
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+   <div>
+      <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
@@ -144,6 +145,7 @@ function Navbar() {
         </>
       )}
     </Disclosure>
+   </div>
   );
 }
 
