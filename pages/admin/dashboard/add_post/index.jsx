@@ -169,7 +169,9 @@ function AddPost() {
               </div>
               <div className="flex">
                 {selectedFile && (
-                  <img src={preview} className="rounded-lg h-72 w-72" />
+                  <div className="relative h-72 w-72">
+                    <Image src={preview} layout="fill" className="rounded-lg " />
+                  </div>
                 )}
               </div>
             </div>
