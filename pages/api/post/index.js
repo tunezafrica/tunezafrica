@@ -10,7 +10,6 @@ handler.post(async (req, res) => {
   try {
     await connect();
 
-
     const queryString = req.body.query;
     const queryStrings = queryString.split(" ");
     let allQueries = [];
@@ -35,6 +34,22 @@ handler.post(async (req, res) => {
     }
     await disconnect();
     return res.status(200).send(posts);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+// get single post for admin dashboard
+// get request
+// /api/post?post_id=abc
+handler.get(async (req, res) => {
+  try {
+    const post_id = req.query.post_id;
+
+    console.log(post_id)
+
+    const post = await Post.findOne({ _id: post_id });
+    return res.status(200).send(post);
   } catch (error) {
     return res.send(error);
   }

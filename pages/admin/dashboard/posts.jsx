@@ -90,7 +90,7 @@ function Posts() {
               <div className="col-span-1"> {moment(post.createdAt).fromNow()}</div>
               <div className="col-span-1"> {post.artist}</div>
               <div className="col-span-1 flex flex-row items-center gap-8">
-                <div className="cursor-pointer hover:bg-gray-200 rounded-full p-1">
+                <div onClick={() => router.push(`/admin/dashboard/edit/${post._id}`)} className="cursor-pointer hover:bg-gray-200 rounded-full p-1">
                   <PencilIcon
                     height={20}
                     width={20}
