@@ -1,22 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import SongItem from "../SongItem/SongItem";
 import cover_1 from "../../public/cover.jpg";
 import axios from "axios";
 
 function MusicPotion({ heading, music }) {
+  const [all_music, setAllMusic] = useState();
 
-  const [all_music, setAllMusic] = useState()
+  useEffect(() => {
+    const getAllPosts = async () => {
+      const { data } = await axios.post(`/api/post`);
+      setAllMusic(data);
+    };
+    getAllPosts();
+  }, []);
 
-  useEffect(()=>{
-    const getAllPosts = async () =>{
-      const {data} = await axios.post(`/api/post`)
-      setAllMusic(data)
-    }
-    getAllPosts()
-  },[])
-
-  console.log(all_music)
+  // console.log(all_music)
 
   return (
     <div className="flex flex-col md:pb-20 pb-8">
@@ -35,10 +34,10 @@ function MusicPotion({ heading, music }) {
         {music?.map((item, index) => (
           <SongItem
             key={index}
-            category={"Naija"}
-            item_name="Gafa Life" 
-            artist_name={"Winky D"}
-            picture={cover_1}
+            category={item.category}
+            item_name={item.title}
+            artist_name={item.artist}
+            picture={item.picture}
           />
         ))}
       </div>

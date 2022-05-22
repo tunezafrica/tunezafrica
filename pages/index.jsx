@@ -2,13 +2,12 @@ import GeneralLayout from "../layouts/GeneralLayout";
 import LatestMusic from "../components/music_components/LatestMusic";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@heroicons/react/solid";
-import data from "../utils/data";
 import MusicPotion from "../components/music_components/MusicPotion";
 import Post from "../models/Post";
 import { connect, convertDocToObj, disconnect } from "../utils/mongo";
 
 export default function Home(props) {
-  const { posts, trending_posts } = props;
+  const { posts, trending_posts, naija_music } = props;
 
   return (
     <GeneralLayout
@@ -40,7 +39,7 @@ export default function Home(props) {
 
         {/* // Naija music */}
         <>
-          <MusicPotion heading={"Naija Music"} music={[1, 2, 3, 4, 5, 6]} />
+          <MusicPotion heading={"Naija Music"} music={naija_music} />
         </>
       </div>
     </GeneralLayout>
@@ -49,10 +48,10 @@ export default function Home(props) {
 
 export async function getServerSideProps(context) {
   await connect();
-  const posts = await Post.find({}).sort({createdAt: -1}).lean();
-  const trending_posts = await Post.find({}).lean()
-  const naija_music = await Post.find({category: 'Naija'})
-  console.log(posts);
+  const posts = await Post.find({}).sort({ createdAt: -1 }).lean();
+  const trending_posts = await Post.find({}).lean();
+  const naija_music = await Post.find({ category: "Naija" });
+
   await disconnect();
   return {
     props: {
