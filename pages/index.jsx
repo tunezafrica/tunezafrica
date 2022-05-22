@@ -33,14 +33,14 @@ export default function Home(props) {
           <LatestMusic heading={"Latest Music"} music={posts} />
         </>
 
-        {/* // naija music */}
+        {/* // trending music */}
         <>
           <LatestMusic heading={"Trending Music"} music={trending_posts} />
         </>
 
-        {/* // hip hip */}
+        {/* // Naija music */}
         <>
-          <MusicPotion heading={"Hip-Hop Music"} music={[1, 2, 3, 4, 5, 6]} />
+          <MusicPotion heading={"Naija Music"} music={[1, 2, 3, 4, 5, 6]} />
         </>
       </div>
     </GeneralLayout>
@@ -51,12 +51,14 @@ export async function getServerSideProps(context) {
   await connect();
   const posts = await Post.find({}).sort({createdAt: -1}).lean();
   const trending_posts = await Post.find({}).lean()
+  const naija_music = await Post.find({category: 'Naija'})
   console.log(posts);
   await disconnect();
   return {
     props: {
       posts: posts?.map(convertDocToObj),
       trending_posts: JSON.parse(JSON.stringify(trending_posts)),
+      naija_music: JSON.parse(JSON.stringify(naija_music)),
     },
   };
 }

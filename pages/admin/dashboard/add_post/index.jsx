@@ -100,7 +100,7 @@ function AddPost() {
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(
               async (downloadURL) => {
-                console.log(downloadURL);
+                // console.log(downloadURL);
                 await axios.post(
                   "/api/post/create",
                   {
@@ -169,9 +169,9 @@ function AddPost() {
                 />
               </div>
               <div className="flex">
-                {selectedFile && (
+                {preview && (
                   <div className="relative h-72 w-72">
-                    <Image src={preview} layout="fill" className="rounded-lg " />
+                    <Image src={preview} objectFit="contain" layout="fill" className="rounded-lg " alt="other words for alt" />
                   </div>
                 )}
               </div>

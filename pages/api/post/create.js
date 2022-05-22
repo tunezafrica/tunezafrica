@@ -22,7 +22,7 @@ auth_handler.post(async (req, res) => {
         all_songs: music
       });
       await new_post.save();
-      return res.statusCode(200).send("Successfully added music");
+      return res.status(200).send("Successfully added music");
     } else {
       return res.send("Not allowed to add to database");
     }

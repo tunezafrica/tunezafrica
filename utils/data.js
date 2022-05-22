@@ -33,6 +33,28 @@ const data = {
         { name: "Naija Singles", description: "" },
       ],
     },
+    {
+      name: "SA",
+      description: "",
+      location: "/sa",
+      slug: "sa",
+      sub_categories: [
+        { name: "SA Albums", description: "" },
+        { name: "SA Eps", description: "" },
+        { name: "SA Singles", description: "" },
+      ],
+    },
+    {
+      name: "Ghananian",
+      description: "",
+      location: "/ghananian",
+      slug: "sa",
+      sub_categories: [
+        { name: "Ghananian Albums", description: "" },
+        { name: "Ghananian Eps", description: "" },
+        { name: "Ghananian Singles", description: "" },
+      ],
+    },
   ],
   posts: [
     {
