@@ -9,11 +9,9 @@ import { connect, convertDocToObj, disconnect } from "../../utils/mongo";
 import Post from "../../models/Post";
 
 function SinglePost(props) {
-  const router = useRouter();
-
   const { page_post, related_posts, trending_posts } = props;
 
-  console.log(page_post);
+  // console.log(page_post);
 
   return (
     <GeneralLayout

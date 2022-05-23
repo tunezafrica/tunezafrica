@@ -19,7 +19,7 @@ function SongItem({ picture, category, item_name, artist_name, id }) {
       </div>
       <div className="flex flex-col items-start my-2">
         <Text noOfLines={1} className="text-gray-800 text font-bold cursor-pointer">{item_name}</Text>
-        <p className="text-gray-500 cursor-pointer">{artist_name}</p>
+        <Text noOfLines={1} className="text-gray-500 cursor-pointer">{artist_name}</Text>
       </div>
     </div>
   );
