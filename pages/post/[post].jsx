@@ -30,7 +30,7 @@ function SinglePost(props) {
               <Image
                 src={page_post?.picture}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
                 className="rounded"
               />
             </div>
