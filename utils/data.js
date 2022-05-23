@@ -55,6 +55,28 @@ const data = {
         { name: "Ghananian Singles", description: "" },
       ],
     },
+    {
+      name: "Dancehall",
+      description: "",
+      location: "/dancehall",
+      slug: "dancehall",
+      sub_categories: [
+        { name: "Dancehall Albums", description: "" },
+        { name: "Dancehall Eps", description: "" },
+        { name: "Dancehall Singles", description: "" },
+      ],
+    },
+    {
+      name: "Amapiano",
+      description: "",
+      location: "/amapiano",
+      slug: "amapiano",
+      sub_categories: [
+        { name: "Amapiano Albums", description: "" },
+        { name: "Amapiano Eps", description: "" },
+        { name: "Amapiano Singles", description: "" },
+      ],
+    },
   ],
   posts: [
     {
