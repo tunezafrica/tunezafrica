@@ -6,8 +6,8 @@ import data from "../../utils/data";
 function Footer() {
   const router = useRouter();
   return (
-    <div className="flex flex-row items-center justify-around py-4 px-16 border-t border-gray-200 bg-gray-200">
-      {data.categories.map((category, index) => (
+    <div className="flex flex-row items-center justify-around w-full py-4 px-16 border-t border-gray-200 bg-gray-200">
+      {/* {data.categories.map((category, index) => (
         <div key={index} className="flex flex-col items-center">
           <Link key={index + category.name} href={category.location} passHref>
             <a
@@ -30,7 +30,8 @@ function Footer() {
           ))}
           </div>
         </div>
-      ))}
+      ))} */}
+      tunezAfrica
     </div>
   );
 }
