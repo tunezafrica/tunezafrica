@@ -11,12 +11,14 @@ import { SearchIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Store } from "../../Context/Store";
 
 function Search() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search_query, setSearchQuery] = useState("");
   const [all_posts, setAllPosts] = useState();
   const router = useRouter();
+  const {dispatch} = useContext(Store)
 
   useEffect(() => {
     const getPosts = async () => {
@@ -29,7 +31,8 @@ function Search() {
   }, [search_query]);
 
   const search_handler = () => {
-    onClose();
+    dispatch({type: 'SET_SEARCH_QUERY', payload: search_query})
+    // onClose();
   };
 
   return (
