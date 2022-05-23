@@ -15,8 +15,8 @@ handler.post(async (req, res) => {
     let allQueries = [];
 
     // for pagination
-    const limit = parseInt(req.query.limit);
-    const skip = parseInt(req.query.skip);
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+    const skip = req.query.skip ? parseInt(req.query.skip) : 2;
 
     queryStrings.forEach((element) => {
       let regex = new RegExp(element, "i");
@@ -28,7 +28,7 @@ handler.post(async (req, res) => {
         { artist: regex }
       );
     });
-    const posts = await Post.find({ $and: [{ $or: allQueries }] });
+    const posts = await Post.find({ $and: [{ $or: allQueries }] }).limit(limit).skip(skip)
     if (!posts) {
       return res.status(400).json({ error: "No Posts found" });
     }
@@ -46,7 +46,7 @@ handler.get(async (req, res) => {
   try {
     const post_id = req.query.post_id;
 
-    console.log(post_id)
+    console.log(post_id);
 
     const post = await Post.findOne({ _id: post_id });
     return res.status(200).send(post);
