@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import GeneralLayout from "../../layouts/GeneralLayout";
 import SongItem from "../../components/SongItem/SongItem";
 import SongLoading from "../../components/SongItem/SongsLoading";
+import { Store } from "../../Context/Store";
 
 function Explore() {
   const [all_posts, setAllPosts] = useState();
   const [loading, setLoading] = useState(false);
   const [skip, setSkip] = useState(0);
+  const {state} = useContext(Store)
+  const {search_query} = state
 
   useEffect(() => {
     const getAllPosts = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.post(`/api/post?limit=5&skip=${skip}`, {
-          query: "",
+        const { data } = await axios.post(`/api/post?limit=20&skip=${skip}`, {
+          query: search_query,
         });
         setLoading(false);
         setAllPosts(data);
@@ -24,7 +27,7 @@ function Explore() {
       }
     };
     getAllPosts();
-  }, [skip]);
+  }, [skip, search_query]);
 
   if (loading) {
     return (
@@ -59,13 +62,13 @@ function Explore() {
         </div>
         <div className="flex flex-row items-center w-full justify-between md:pt-16 pt-8">
           <div
-            onClick={() => setSkip(skip - 5)}
+            // onClick={() => setSkip(skip - 5)}
             className="text-white cursor-pointer bg-green-700 text-sm p-1 rounded"
           >
             Prev Page
           </div>
           <div
-            onClick={() => setSkip(skip + 5)}
+            onClick={() => setSkip(skip + 20)}
             className="text-white cursor-pointer bg-green-700 text-sm p-1 rounded"
           >
             Next Page

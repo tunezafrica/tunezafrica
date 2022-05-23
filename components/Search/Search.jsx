@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   useDisclosure,
   Modal,
@@ -20,15 +20,13 @@ function Search() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const { data } = await axios.post(`/api/post`, {
+      const { data } = await axios.post(`/api/post?limit=9`, {
         query: search_query,
       });
       setAllPosts(data);
     };
     getPosts();
   }, [search_query]);
-
-  console.log(all_posts);
 
   const search_handler = () => {
     onClose();
@@ -110,7 +108,7 @@ function Search() {
                       ))}
                       <div className="my-1"></div>
                       {all_posts?.length > 8 && (
-                        <div className="flex flex-col text-center capitalize text-gray-500 pt-2 border-t border-gray-300 cursor-pointer">
+                        <div onClick={() => router.push('/explore')} className="flex flex-col text-center capitalize text-gray-500 pt-2 border-t border-gray-300 cursor-pointer">
                           <p className="text-center">View all results</p>
                         </div>
                       )}
