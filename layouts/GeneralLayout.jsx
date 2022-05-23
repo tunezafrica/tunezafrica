@@ -18,7 +18,7 @@ function GeneralLayout({
   const original_title = "TunezAfrica";
   const url = "www.tunezafrica.com";
   return (
-    <div className="overflow-scroll bg-gray-100 min-h-screen" style={{ backgroundColor: 'rgb(243 244 246)' }}>
+    <div className="overflow-scroll relative bg-gray-100 min-h-screen" style={{ backgroundColor: 'rgb(243 244 246)' }}>
       <Head>
         <title>{title ? `${title} | TunezAfrica ` : original_title}</title>
         <meta name="description" content={description ? description : desc} />
@@ -64,7 +64,7 @@ function GeneralLayout({
       <nav className="sticky top-0 z-50 right-0">
         <Navbar />
       </nav>
-      <main className="w-full pt-16 bg-gray-100 min-h-screen" style={{ backgroundColor: 'rgb(243 244 246)' }}>
+      <main className="w-full z-40 pt-16 bg-gray-100 min-h-screen" style={{ backgroundColor: 'rgb(243 244 246)' }}>
         <Container maxW="container.xl" className="mx-auto bg-gray-100">
           {children}
         </Container>

@@ -26,7 +26,7 @@ function SinglePost(props) {
       <div className="flex flex-row py-8 gap-8">
         <div className="md:w-3/4 w-full flex flex-col space-y-8 ">
           <div className="flex flex-col items-center bg-white rounded shadow p-4">
-            <div className="relative picture md:h-[400px] md:w-[400px] h-72 w-72 rounded">
+            <div className="relative z-10 picture md:h-[400px] md:w-[400px] h-72 w-72 rounded">
               <Image
                 src={page_post?.picture}
                 layout="fill"
