@@ -8,15 +8,15 @@ import { Store } from "../../Context/Store";
 function Explore() {
   const [all_posts, setAllPosts] = useState();
   const [loading, setLoading] = useState(false);
-  const [skip, setSkip] = useState(0);
-  const {state} = useContext(Store)
-  const {search_query} = state
+  const [page, setPage] = useState(1);
+  const { state } = useContext(Store);
+  const { search_query } = state;
 
   useEffect(() => {
     const getAllPosts = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.post(`/api/post?limit=20&skip=${skip}`, {
+        const { data } = await axios.post(`/api/post?page=${page}`, {
           query: search_query,
         });
         setLoading(false);
@@ -27,7 +27,7 @@ function Explore() {
       }
     };
     getAllPosts();
-  }, [skip, search_query]);
+  }, [page, search_query]);
 
   if (loading) {
     return (
@@ -68,7 +68,7 @@ function Explore() {
             Prev Page
           </div>
           <div
-            onClick={() => setSkip(skip + 20)}
+            onClick={() => setPage(page + 1)}
             className="text-white cursor-pointer bg-green-700 text-sm p-1 rounded"
           >
             Next Page

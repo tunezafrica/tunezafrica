@@ -129,8 +129,10 @@ function EditPost() {
                     <div className="relative h-72 w-72">
                       <Image
                         src={currenct_post?.picture}
-                        objectFit="contain"
-                        layout="fill"
+                        objectFit="cover"
+                        layout="responsive"
+                        height={100}
+                        width={100}
                         className="rounded-lg "
                         alt="other words for alt"
                       />

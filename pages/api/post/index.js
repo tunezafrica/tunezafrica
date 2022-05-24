@@ -7,16 +7,17 @@ const handler = nc();
 // post request
 // /api/post
 handler.post(async (req, res) => {
+  // for pagination
+  const resultsPerPage = 15;
+  //@ts-ignore
+  let page = parseInt(req.query.page) >= 1 ? parseInt(req.query.page) : 1;
+  page = page - 1;
   try {
     await connect();
 
     const queryString = req.body.query;
     const queryStrings = queryString.split(" ");
     let allQueries = [];
-
-    // for pagination
-    const limit = req.query.limit ? parseInt(req.query.limit) : 10;
-    const skip = req.query.skip ? parseInt(req.query.skip) : 2;
 
     queryStrings.forEach((element) => {
       let regex = new RegExp(element, "i");
@@ -28,7 +29,9 @@ handler.post(async (req, res) => {
         { artist: regex }
       );
     });
-    const posts = await Post.find({ $and: [{ $or: allQueries }] }).limit(limit).skip(skip)
+    const posts = await Post.find({ $and: [{ $or: allQueries }] })
+      .limit(resultsPerPage)
+      .skip(resultsPerPage * page);
     if (!posts) {
       return res.status(400).json({ error: "No Posts found" });
     }
